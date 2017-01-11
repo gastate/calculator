@@ -38,15 +38,31 @@ Istanbul - Static analysis tool to generate test coverage reports
 
 **Usage:**
 
-[npm install --g typescript mocha istanbul typings serverless] -- set up dependencies
-
-[typings install] -- pull down any missing typescript definitions
+[npm globals] -- set up global dependencies
 
 [npm install] -- pull down any missing dependencies
 
-[tsc] -- typescript compile -- makes sure everything is wired up correctly
+[npm run start] -- start the project locally 
 
 [npm run test] -- transpile and run unit tests
 
 [npm run cover] -- transpile and generate coverage reports
 
+This calculator comes equipped with four HTTP Routes:
+```sh
+  POST /add
+  POST /subtract
+  POST /multiply
+  POST /divide
+```
+Each of these expects a JSON payload containing numbers "a" and "b", like so:
+
+```sh
+POST /add HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+Accept: application/json
+Cache-Control: no-cache
+
+{ "a": 1, "b": 2}
+```
