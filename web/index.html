@@ -8,11 +8,11 @@
     <meta name="description" content="A demo calculator using serverless architecture">
     <meta name="author" content="Scott Hankinson">
 
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
     <script type="text/javascript" src="math.js"></script>
-    
-    <style>
 
+    <style>
         body {
             color: white;
             background-color: blue;
@@ -21,26 +21,26 @@
         table {
             border-color: white;
         }
-        
+
         .parent {
             position: relative;
             width: 100%;
             height: 100px;
             z-index: 10;
         }
-        
+
         .child {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
-        
+
         .parent input {
             font-size: 1.6em;
             width: 40px;
         }
-        
+
         .parent .viewFinder {
             width: 160px;
             margin-left: 8px;
@@ -122,77 +122,77 @@
     </div>
     <script>
         var thinking = false;
-        var baseUrl = "https://api-dev.slalom-serverless-demo.com/calculator/";
+        var baseUrl = "http://localhost:3000/";
 
-        var callAbs = function(value){
+        var callAbs = function (value) {
             var args = value.trim().split(' ');
-            if (args.length > 1){
+            if (args.length > 1) {
                 alert('Too Many Operands!');
                 return;
             }
 
             $.ajax({
                 method: "POST",
-                url: baseUrl + 'abs', 
+                url: baseUrl + 'abs',
                 data: JSON.stringify({ a: parseInt(args[0]) }),
                 contentType: "application/json"
             })
-            .done(function( data ) {
-                thinking = false;
-                $("#status").html("Calculon is ready");
-                Calc.Input.value = data.output;
-            })
-            .fail(function(err) {
-                alert( "error: " + JSON.stringify(err));
-                thinking = false;
-                $("#status").html("Calculon is ready");
-                Calc.Input.value = '';
-            });
+                .done(function (data) {
+                    thinking = false;
+                    $("#status").html("Calculon is ready");
+                    Calc.Input.value = data.output;
+                })
+                .fail(function (err) {
+                    alert("error: " + JSON.stringify(err));
+                    thinking = false;
+                    $("#status").html("Calculon is ready");
+                    Calc.Input.value = '';
+                });
         }
 
-        var callSquare = function(value){
+        var callSquare = function (value) {
             var args = value.trim().split(' ');
-            if (args.length > 1){
+            if (args.length > 1) {
                 alert('Too Many Operands!');
                 return;
             }
 
             $.ajax({
                 method: "POST",
-                url: baseUrl + 'square', 
+                url: baseUrl + 'square',
                 data: JSON.stringify({ a: parseInt(args[0]) }),
                 contentType: "application/json"
             })
-            .done(function( data ) {
-                thinking = false;
-                $("#status").html("Calculon is ready");
-                Calc.Input.value = data.output;
-            })
-            .fail(function(err) {
-                alert( "error: " + JSON.stringify(err));
-                thinking = false;
-                $("#status").html("Calculon is ready");
-                Calc.Input.value = '';
-            });
+                .done(function (data) {
+                    thinking = false;
+                    $("#status").html("Calculon is ready");
+                    Calc.Input.value = data.output;
+                })
+                .fail(function (err) {
+                    alert("error: " + JSON.stringify(err));
+                    thinking = false;
+                    $("#status").html("Calculon is ready");
+                    Calc.Input.value = '';
+                });
         }
 
-        var doTheCalc = function(value){
+        var doTheCalc = function (value) {
             var args = value.trim().split(' ');
-            if (args.length < 3){
+            if (args.length < 3) {
                 alert('Not Enough Operands!');
                 return;
             }
-            
+
             thinking = true;
             Calc.Input.value = ".";
             var operand = "";
-            if (args[1] === '*'){
+            if (args[1] === '*') {
                 operand = "multiply";
-            } else if (args[1] === '/'){
+            } else if (args[1] === '/') {
                 operand = "divide";
-            } else if (args[1] === '+'){
+            } else if (args[1] === '+') {
                 operand = "add";
-            } else if (args[1] === '-'){
+            } else if (args[1] === '-') {
                 operand = "subtract";
             } else {
                 thinking = false;
@@ -204,39 +204,39 @@
 
             $.ajax({
                 method: "POST",
-                url: baseUrl + operand, 
+                url: baseUrl + operand,
                 data: JSON.stringify({ a: parseInt(args[0]), b: parseInt(args[2]) }),
                 contentType: "application/json"
             })
-            .done(function( data ) {
-                thinking = false;
-                $("#status").html("Calculon is ready");
-                setGradient();
-                Calc.Input.value = data.output;
-            })
-            .fail(function(err) {
-                alert( "error: " + JSON.stringify(err));
-                thinking = false;
-                $("#status").html("Calculon is ready");
-                setGradient();
-                Calc.Input.value = '';
-            });
+                .done(function (data) {
+                    thinking = false;
+                    $("#status").html("Calculon is ready");
+                    setGradient();
+                    Calc.Input.value = data.output;
+                })
+                .fail(function (err) {
+                    alert("error: " + JSON.stringify(err));
+                    thinking = false;
+                    $("#status").html("Calculon is ready");
+                    setGradient();
+                    Calc.Input.value = '';
+                });
 
             return;
         }
 
         // Set Calculon's Thinking Hat
-        setInterval(function(){
+        setInterval(function () {
             if (!thinking)
                 return;
 
-            if ($("#status").html() === "Calculon is thinking..."){
+            if ($("#status").html() === "Calculon is thinking...") {
                 console.log('Already thinking, add more dots');
                 Calc.Input.value = Calc.Input.value + '.';
             } else {
                 console.log('Let\'s get thinking!');
                 $("#status").html('Calculon is thinking...');
-            }   
+            }
         }, 250);
 
         var offset = 0;
@@ -246,30 +246,30 @@
             offset = offset + 1;
             //offset = Math.floor(Math.random() * 9);
             var canvas = document.getElementById("canvas");
-            canvas.width  = window.innerWidth;
+            canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             var halfWidth = canvas.width / 2;
             var halfHeight = canvas.height / 2.5;
             var gradientCenter = new Point(halfWidth, halfHeight);
-            var colors = [ [1, 0, 0, 1], // red
-                [.9, .1, 0, 1],
-                [.8, .2, 0, 1],
-                [.1, .9, 0, 1],
-                [0, 1, 0, 1], // green
-                [0, .9, .1, 1],
-                [0, .2, .8, 1],
-                [0, .1, .9, 1],
-                [0, 0, 1, 1] // blue
+            var colors = [[1, 0, 0, 1], // red
+            [.9, .1, 0, 1],
+            [.8, .2, 0, 1],
+            [.1, .9, 0, 1],
+            [0, 1, 0, 1], // green
+            [0, .9, .1, 1],
+            [0, .2, .8, 1],
+            [0, .1, .9, 1],
+            [0, 0, 1, 1] // blue
             ];
-            
-            var angularGradient = function(point) {
+
+            var angularGradient = function (point) {
 
                 // figure out angle
                 var dir = point.sub(gradientCenter);
                 var angle = Math.atan2(dir.y, dir.x);
 
                 // wrap around as positive
-                if (dir.y < 0 ) {
+                if (dir.y < 0) {
                     angle += 2 * Math.PI;
                 }
 

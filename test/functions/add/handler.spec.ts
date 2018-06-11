@@ -12,8 +12,8 @@ describe("Testing Addition Operator", () => {
     };
     let callback2 = function (error: any, response: any) {
         let result = JSON.parse(response.body);
-        if (result.output !== 3)
-            throw new Error("Expected output of 3 but found " + result.output);
+        if (result.output !== "12")
+            throw new Error("Expected output of 12 but found " + result.output);
     };
 
     let callback4 = function (error: any, response: any) {
@@ -49,11 +49,11 @@ describe("Testing Addition Operator", () => {
         });
 
         it("should add the numbers", () => {
-            add({ body: "{\"a\": 1, \"b\": 2}" }, null, callback2);
+            add({ body: "{\"a\": \"1\", \"b\": \"2\"}" }, null, callback2);
         });
 
         it("should return a 200 status code", () => {
-            add({ body: "{\"a\": 1, \"b\": 2}" }, null, callback3);
+            add({ body: "{\"a\": \"1\", \"b\": \"2\"}" }, null, callback3);
         });
 
         it("should return an error if a is null", () => {
@@ -64,12 +64,12 @@ describe("Testing Addition Operator", () => {
             add({ body: "{\"a\": 1}" }, null, callback4);
         });
 
-        it("should return an error if a is not a number", () => {
-            add({ body: "{\"a\": \"1\", \"b\": 2}" }, null, callback5);
+        it("should return an error if a is a number", () => {
+            add({ body: "{\"a\": 1, \"b\": 2}" }, null, callback5);
         });
 
-        it("should return an error if b is not a number", () => {
-            add({ body: "{\"a\": 1, \"b\": \"abc\"}" }, null, callback5);
+        it("should return an error if b is a number", () => {
+            add({ body: "{\"a\": \"1\", \"b\": 1}" }, null, callback5);
         });
 
         it("should return an error if body is not valid JSON", () => {
