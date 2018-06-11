@@ -1,5 +1,23 @@
 **Serverless + Typescript calculator** – Sample api built using familiar calculator functionality to demonstrate how Serverless can be used to deploy a fleet of micro-services.
 
+** Instructions: **
+Something seems to be wrong with our Addition logic -- can you find and fix the bug?  Can you make all tests pass?
+
+**Usage:**
+
+[npm run globals] -- set up dependencies
+
+[npm install] -- pull down any missing dependencies
+
+[npm run start] -- compile and run the project locally
+
+[cloud 9]:  Run --> Preview --> Launch to set up the running API;  Edit web/index.html with the new base_url and preview the page
+
+[npm run test] -- compile and run unit tests 
+
+[npm run cover] -- compile and run coverage repot
+
+
 **Contents of the Project** 
 
 *package.json* contains the description of the packages we will be using
@@ -34,19 +52,4 @@ Mocha - Test runner
 
 Istanbul - Static analysis tool to generate test coverage reports
 
-
-
-**Usage:**
-
-[npm install --g typescript mocha istanbul typings serverless] -- set up dependencies
-
-[typings install] -- pull down any missing typescript definitions
-
-[npm install] -- pull down any missing dependencies
-
-[tsc] -- typescript compile -- makes sure everything is wired up correctly
-
-[npm run test] -- transpile and run unit tests
-
-[npm run cover] -- transpile and generate coverage reports
 

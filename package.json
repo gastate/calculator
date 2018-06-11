@@ -10,7 +10,7 @@
   "scripts": {
     "clean": "shx rm -rf build && shx rm -rf coverage && shx rm -rf testreports && shx rm -rf .serverless && shx rm -rf .sonar && npm install && npm run lint",
     "lint": "tslint -c ./tslint.json 'src/**/*.ts' 'test/**/*.ts'",
-    "globals": "npm install -g serverless mocha typescript typings istanbul shx tslint",
+    "globals": "npm install -g serverless mocha typescript istanbul shx tslint",
     "prestart": "npm run clean && tsc",
     "start": "node --inspect node_modules/serverless/bin/serverless offline start",
     "predeploy": "npm run clean && tsc && npm prune --production",
