@@ -1,22 +1,23 @@
 import { divide } from "src/functions/divide/handler";
 
 describe("Testing Division Operator", () => {
-    let callback1 = function (error: any, response: any) {
+    let successCallback = function (error: any, response: any) {
         if (error !== null)
             throw new Error("Expected no errors but found " + error);
     };
 
-    let callback3 = function (error: any, response: any) {
-        if (response.statusCode !== 200)
-            throw new Error("Expected status code of 200 but found " + response.statusCode);
-    };
-    let callback2 = function (error: any, response: any) {
+    let checkMathCallback = function (error: any, response: any) {
         let result = JSON.parse(response.body);
         if (result.output !== 5)
             throw new Error("Expected output of 5 but found " + result.output);
     };
 
-    let callback4 = function (error: any, response: any) {
+    let statusCodeCallback = function (error: any, response: any) {
+        if (response.statusCode !== 200)
+            throw new Error("Expected status code of 200 but found " + response.statusCode);
+    };
+
+    let badRequestMissingArgCallback = function (error: any, response: any) {
         if (response.statusCode !== 400)
             throw new Error("Expected status code of 400 but found " + response.statusCode);
 
@@ -25,7 +26,7 @@ describe("Testing Division Operator", () => {
             throw new Error("Expected errors but found none");
     };
 
-    let callback5 = function (error: any, response: any) {
+    let badRequestWrongTypeCallback = function (error: any, response: any) {
         if (response.statusCode !== 400)
             throw new Error("Expected status code of 400 but found " + response.statusCode);
 
@@ -34,7 +35,7 @@ describe("Testing Division Operator", () => {
             throw new Error("Expected non-number arguments to be rejected");
     };
 
-    let callback6 = (error: any, response: any) => {
+    let badRequestParseErrorCallback = (error: any, response: any) => {
         if (response.statusCode !== 400)
             throw new Error("Expected status code of 400 but found " + response.statusCode);
 
@@ -45,35 +46,35 @@ describe("Testing Division Operator", () => {
 
     describe("#divide", () => {
         it("should not return an error", () => {
-            divide({ body: "{\"a\": 1, \"b\": 2}" }, null, callback1);
+            divide({ body: "{\"a\": 1, \"b\": 2}" }, null, successCallback);
         });
 
         it("should divide the numbers", () => {
-            divide({ body: "{\"a\": 10, \"b\": 2}" }, null, callback2);
+            divide({ body: "{\"a\": 10, \"b\": 2}" }, null, checkMathCallback);
         });
 
         it("should return a 200 status code", () => {
-            divide({ body: "{\"a\": 1, \"b\": 2}" }, null, callback3);
+            divide({ body: "{\"a\": 1, \"b\": 2}" }, null, statusCodeCallback);
         });
 
         it("should return an error if a is null", () => {
-            divide({ body: "{\"b\": 2}" }, null, callback4);
+            divide({ body: "{\"b\": 2}" }, null, badRequestMissingArgCallback);
         });
 
         it("should return an error if b is null", () => {
-            divide({ body: "{\"a\": 1}" }, null, callback4);
+            divide({ body: "{\"a\": 1}" }, null, badRequestMissingArgCallback);
         });
 
         it("should return an error if a is not a number", () => {
-            divide({ body: "{\"a\": \"1\", \"b\": 2}" }, null, callback5);
+            divide({ body: "{\"a\": \"1\", \"b\": 2}" }, null, badRequestWrongTypeCallback);
         });
 
         it("should return an error if b is not a number", () => {
-            divide({ body: "{\"a\": 1, \"b\": \"abc\"}" }, null, callback5);
+            divide({ body: "{\"a\": 1, \"b\": \"abc\"}" }, null, badRequestWrongTypeCallback);
         });
 
         it("should return an error if body is not valid JSON", () => {
-            divide({ body: "3" }, null, callback6);
+            divide({ body: "3" }, null, badRequestParseErrorCallback);
         });
     });
 

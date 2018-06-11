@@ -8,8 +8,8 @@ describe("Testing Addition Operator", () => {
 
     let checkMathCallback = function (error: any, response: any) {
         let result = JSON.parse(response.body);
-        if (result.output !== 3)
-            throw new Error("Expected output of 3 but found " + result.output);
+        if (result.output !== "12")
+            throw new Error("Expected output of 12 but found " + result.output);
     };
 
     let statusCodeCallback = function (error: any, response: any) {
@@ -31,7 +31,7 @@ describe("Testing Addition Operator", () => {
             throw new Error("Expected status code of 400 but found " + response.statusCode);
 
         let result = JSON.parse(response.body);
-        if (result.message !== "[400] Error!  arguments a and b must be numbers!")
+        if (result.message !== "[400] Error!  arguments a and b must be strings!")
             throw new Error("Expected non-number arguments to be rejected");
     };
 
@@ -50,11 +50,11 @@ describe("Testing Addition Operator", () => {
         });
 
         it("should add the numbers", () => {
-            add({ body: "{\"a\": 1, \"b\": 2}" }, null, checkMathCallback);
+            add({ body: "{\"a\": \"1\", \"b\": \"2\"}" }, null, checkMathCallback);
         });
 
         it("should return a 200 status code", () => {
-            add({ body: "{\"a\": 1, \"b\": 2}" }, null, statusCodeCallback);
+            add({ body: "{\"a\": \"1\", \"b\": \"2\"}" }, null, statusCodeCallback);
         });
 
         it("should return an error if a is null", () => {
@@ -66,11 +66,11 @@ describe("Testing Addition Operator", () => {
         });
 
         it("should return an error if a is not a number", () => {
-            add({ body: "{\"a\": \"1\", \"b\": 2}" }, null, badRequestWrongTypeCallback);
+            add({ body: "{\"a\": 1, \"b\": \"2\"}" }, null, badRequestWrongTypeCallback);
         });
 
         it("should return an error if b is not a number", () => {
-            add({ body: "{\"a\": 1, \"b\": \"abc\"}" }, null, badRequestWrongTypeCallback);
+            add({ body: "{\"a\": \"1\", \"b\": 2}" }, null, badRequestWrongTypeCallback);
         });
 
         it("should return an error if body is not valid JSON", () => {
