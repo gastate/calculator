@@ -202,10 +202,16 @@
                 return;
             }
 
+            const calcData = JSON.stringify({ a: parseInt(args[0]), b: parseInt(args[2]) });
+            /* remove me once ADD is fixed */
+            if (operand === "add") {
+                calcData = JSON.stringify({ a: args[0], b: args[2] });
+            }
+
             $.ajax({
                 method: "POST",
                 url: baseUrl + operand,
-                data: JSON.stringify({ a: parseInt(args[0]), b: parseInt(args[2]) }),
+                data: calcData,
                 contentType: "application/json"
             })
                 .done(function (data) {
